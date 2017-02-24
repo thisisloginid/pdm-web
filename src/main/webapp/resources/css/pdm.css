@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+.frame-wrap {
+    width: 70%;
+    hegith: auto;
+}
+
+input {
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+}
+
+div {
+    border: 1px red solid;
+}
