@@ -10,7 +10,6 @@
         <property name="resources">
             <map>
                 <entry key="SCMCD0001.S01">
-                    <description>Example</description>
                     <map>
                         <entry key="MODULES">
                             <list>

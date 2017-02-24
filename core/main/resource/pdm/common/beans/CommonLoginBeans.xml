@@ -10,7 +10,6 @@
         <property name="resources">
             <map>
                 <entry key="SCMLO0001.I01">
-                    <description>Login page</description>
                     <map>
                         <entry key="RESULTPAGE">
                             <map>
@@ -20,26 +19,20 @@
                     </map>
                 </entry>
                 <entry key="SCMLO0001.S01">
-                    <description>Login</description>
                     <map>
                         <entry key="MODULES">
                             <list>
                                 <!-- required property is klass, method of bean. -->
                                 <bean class="${bean.module}">
-                                    <property name="klass" value="com.neo.pdm.common.process.CommonLoginProcess" />
-                                    <property name="method" value="login" />
-                                    <property name="result" value="loginYn"/>    <!-- attribute value is Map key -->
-                                    <property name="argument">
-                                        <map>
-                                            <entry key="userinfo" value="com.neo.pdm.common.model.UserInfo" />
-                                        </map>
-                                    </property>
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="noticeList"/>    <!-- attribute value is Map key -->
                                 </bean>
                             </list>
                         </entry>
                         <entry key="RESULTPAGE">
                             <map>
-                                <entry key="SUCC01" value="/login.do" />
+                                <entry key="SUCC01" value="/index.do" />
                             </map>
                         </entry>
                     </map>

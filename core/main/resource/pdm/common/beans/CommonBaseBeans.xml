@@ -10,7 +10,7 @@
         <property name="resources">
             <map>
                 <entry key="SCMBA0001.I01">
-                    <description>notice</description>
+                <description>index page</description>
                     <map>
                         <entry key="RESULTPAGE">
                             <map>
@@ -20,15 +20,21 @@
                     </map>
                 </entry>
                 <entry key="SCMBA0001.S01">
-                    <description>notice list</description>
+                <description>notice list and discussion list</description>
                     <map>
                         <entry key="MODULES">
                             <list>
                                 <!-- required property is klass, method of bean. -->
                                 <bean class="${bean.module}">
-                                    <property name="klass" value="com.neo.pdm.board.bbs.BoardNoticeProcess" />
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
                                     <property name="method" value="selectNoticeList" />
                                     <property name="result" value="noticeList"/>    <!-- attribute value is Map key -->
+                                </bean>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardDiscussionProcess" />
+                                    <property name="method" value="selectDiscussionList" />
+                                    <property name="result" value="discussionList"/>    <!-- attribute value is Map key -->
                                 </bean>
                             </list>
                         </entry>
@@ -39,7 +45,97 @@
                         </entry>
                     </map>
                 </entry>
-                <!-- SCMLO0001.S01 end -->
+                <entry key="SCMBA0002.S01">
+                <description>notice paging list</description>
+                    <map>
+                        <entry key="MODULES">
+                            <list>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="noticeList"/>    <!-- attribute value is Map key -->
+                                </bean>
+                            </list>
+                        </entry>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/board/notice/notice.list.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+                <entry key="SCMBA0003.S01">
+                <description>notice detail</description>
+                    <map>
+                        <entry key="MODULES">
+                            <list>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="selectNoticeDetail" />
+                                    <property name="result" value="noticeDetail"/>    <!-- attribute value is Map key -->
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="seq" value="java.lang.String" />
+                                        </map>
+                                    </property>
+                                </bean>
+                            </list>
+                        </entry>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/board/notice/notice.detail.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+                <entry key="SCMBA0004.I01">
+                <description>notice detail</description>
+                    <map>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/board/notice/notice.insert.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+                <entry key="SCMBA0004.C01">
+                <description>notice insert</description>
+                    <map>
+                        <entry key="MODULES">
+                            <list>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="insertNotice" />
+                                    <property name="result" value="seq"/>    <!-- attribute value is Map key -->
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="noticeInfo" value="com.neo.pdm.board.model.NoticeInfo" />
+                                        </map>
+                                    </property>
+                                </bean>
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="selectNoticeDetail" />
+                                    <property name="result" value="noticeDetail"/>    <!-- attribute value is Map key -->
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="seq" value="java.lang.String" />
+                                        </map>
+                                    </property>
+                                </bean>
+                            </list>
+                        </entry>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/board/notice/notice.detail.do" />
+                                <entry key="FAIL01" value="/board/notice/notice.insert.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
             </map>
         </property>
     </bean>

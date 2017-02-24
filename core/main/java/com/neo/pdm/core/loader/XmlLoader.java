@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.ui.Model;
 
-import com.neo.pdm.common.model.UserInfo;
+import com.neo.pdm.core.SessionManager;
 import com.neo.pdm.core.model.DefaultUserInfo;
 import com.neo.pdm.core.model.ModuleInfo;
 import com.neo.pdm.core.properties.CoreConstant;
@@ -33,10 +33,6 @@ public class XmlLoader extends Loader{
     public void execute(DefaultUserInfo userinfo, String sScreenid, String sActionid) throws Exception{
         //modules info
         List<ModuleInfo> modules = this.getModules(sScreenid, sActionid);
-        
-        if( userinfo != null ){
-            userinfo.setUserMap(out.asMap());
-        }
         
         Map<String, Object> values = new HashMap<String, Object>();
         
@@ -79,6 +75,8 @@ public class XmlLoader extends Loader{
                     } else {
                         if( argumentTypes[i].equals(Map.class) ){
                             arguments[i] = in;
+                        } else if ( argumentTypes[i].equals(String.class) ){
+                            arguments[i] = (String)in.get(sKey);    //bean mapping
                         } else {
                             instance = argumentTypes[i].newInstance();
                             BeanUtils.copyProperties(instance, in);    //bean mapping
@@ -94,9 +92,9 @@ public class XmlLoader extends Loader{
             
             //invok method return type is void.
             if( "".equals(sResult) ){
-                logger.debug("common :: invok class info   =============::\n public void " + sClass+"."+sMethod+"("+sbArgument.toString()+");");
+                logger.debug("common :: invok class info   =============:: public void " + sClass+"."+sMethod+"("+sbArgument.toString()+");");
             } else {
-                logger.debug("common :: invok class info   =============::\n public return (" + sResult + ") " + sClass+"."+sMethod+"("+sbArgument.toString()+");");
+                logger.debug("common :: invok class info   =============:: public return (" + sResult + ") " + sClass+"."+sMethod+"("+sbArgument.toString()+");");
             }
             
             if( values.containsKey(sResult) ){
@@ -104,11 +102,10 @@ public class XmlLoader extends Loader{
             }
             
             klass = Class.forName(sClass);
-            constructor = klass.getConstructor(new Class[]{UserInfo.class});
+            constructor = klass.getConstructor(new Class[]{DefaultUserInfo.class});
             instance = constructor.newInstance(userinfo);
             method = klass.getDeclaredMethod(sMethod, argumentTypes);
 
-            //invoke mission
             if( Util.isNullOrEmpty(sResult) != void.class.equals(method.getReturnType()) ){
                 throw new Exception("Different from xml resource to executed resource. xml defined return value [" +sResult+ "], executed resource return value [" +method.getReturnType()+ "].");
             }
@@ -122,9 +119,10 @@ public class XmlLoader extends Loader{
                 
                 if( !values.containsKey(sResult) ){
                     values.put(sResult, result);
+                    out.addAttribute(sResult, result);
                 }
                 
-                logger.debug("common :: invok class result =============::\n " + result.toString());
+                logger.debug("common :: invok class result =============:: " + result.toString());
                 //result.addAttribute(WordConfig.MISSION_RESULT, returnObject);
             } else {
                 if( !Util.isNull(arguments) ){
@@ -135,7 +133,6 @@ public class XmlLoader extends Loader{
             }
             logger.debug("isTransaction : " + isTransaction);
         }
-        out.addAttribute(sResult, result);
     }
     
     /**

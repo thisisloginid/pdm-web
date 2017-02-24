@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 
 import com.neo.pdm.core.model.ModuleInfo;
 import com.neo.pdm.core.model.ResourceInfo;
-import com.neo.pdm.core.properties.CoreConstant;
 
 public abstract class Loader implements ILoader {
     private static final Logger logger = LoggerFactory.getLogger(Loader.class);
@@ -21,25 +20,19 @@ public abstract class Loader implements ILoader {
     protected Model out;
     
     static{
-        if( "xml".equals(CoreConstant.LOADER_TYPE) ){
-            AbstractApplicationContext context = new GenericXmlApplicationContext("classpath:pdm/XmlBeans.xml");
-            for( String id : context.getBeanDefinitionNames()){
-                try{
-                    resources.getResources().putAll(((ResourceInfo)context.getBean(id)).getResources());
-                }catch(ClassCastException cce){
-                    if( cce.getMessage().indexOf("PropertySourcesPlaceholderConfigurer") != -1 ){
-                        logger.debug("common :: resources exception cause : " + cce.getMessage());    
-                    } else {
-                        throw cce;
-                    }
+        AbstractApplicationContext context = new GenericXmlApplicationContext("classpath:pdm/XmlBeans.xml");
+        for( String id : context.getBeanDefinitionNames()){
+            try{
+                resources.getResources().putAll(((ResourceInfo)context.getBean(id)).getResources());
+            }catch(ClassCastException cce){
+                if( cce.getMessage().indexOf("PropertySourcesPlaceholderConfigurer") != -1 ){
+                    logger.debug("common :: resources exception cause : " + cce.getMessage());    
+                } else {
+                    throw cce;
                 }
             }
-            context.close();
-        } else if ( "yml".equals(CoreConstant.LOADER_TYPE) ){
-            
-        } else if ( "db".equals(CoreConstant.LOADER_TYPE) ){
-            
         }
+        context.close();
     }
     
     public Loader(Map<String, Object> in, Model out){

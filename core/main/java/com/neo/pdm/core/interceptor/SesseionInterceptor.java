@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.neo.pdm.core.SessionManager;
+import com.neo.pdm.core.model.DefaultUserInfo;
 import com.neo.pdm.core.util.Util;
 
 /**
@@ -23,9 +24,8 @@ public class SesseionInterceptor extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String sScreenid = (String)request.getParameter("screenid");
         String sActionid = (String)request.getParameter("actionid");
-        
         if( Util.isNullOrEmpty(sScreenid) || Util.isNullOrEmpty(sActionid)){
-            response.sendRedirect("/Action.action?screenid=SCMLO0001&actionid=I01");
+            response.sendRedirect("/what/Action.action?screenid=SCMBA0001&actionid=S01");
             return false;
         }
         
@@ -33,24 +33,7 @@ public class SesseionInterceptor extends HandlerInterceptorAdapter{
         if( "SCMLO0001I01".equals(sScreenid+sActionid) ){
             return true;
         }
-        
-        SessionManager sessionManager = new SessionManager(request);
-        UserInfo userinfo = sessionManager.getSession();
-        if( userinfo == null ){
-            response.sendRedirect("/Action.action?screenid=SCMLO0001&actionid=I01");
-            return false;
-        }*/
+        */
         return true;
     }
-    
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        super.postHandle(request, response, handler, modelAndView);
-        /*
-        UserInfo userinfo = (UserInfo)request.getSession().getAttribute(CoreConstant.KEY_USER_INFO);
-        if( userinfo != null ){
-            userinfo.setUserMap(null);
-        }*/
-    }
-
 }
