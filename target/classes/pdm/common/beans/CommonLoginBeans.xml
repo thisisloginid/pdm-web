@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="COMMOM.LO" class="${bean.resource}">
+        <!--
+            SCREENID : First 2 char of domain and sequence 5 char.
+            ACTIONID : First char is 'CRUD' or user defined 'U' and there add number of between 0 and 99.
+        -->
+        <property name="resources">
+            <map>
+                <entry key="SCMLO0001.I01">
+                    <map>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/index.do"/>
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+                <entry key="SCMLO0001.S01">
+                    <map>
+                        <entry key="MODULES">
+                            <list>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.board.process.BoardNoticeProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="noticeList"/>    <!-- attribute value is Map key -->
+                                </bean>
+                            </list>
+                        </entry>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/index.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+                <!-- SCMLO0001.S01 end -->
+            </map>
+        </property>
+    </bean>
+    
+</beans>

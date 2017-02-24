@@ -1,0 +1,71 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="COMMON.CD" class="${bean.resource}">
+        <!--
+            SCREENID : First 2 char of domain and sequence 5 char.
+            ACTIONID : First char is 'CRUD' or user defined 'U' and there add number of between 0 and 99.
+        -->
+        <property name="resources">
+            <map>
+                <entry key="SCMCD0001.S01">
+                    <map>
+                        <entry key="MODULES">
+                            <list>
+                                <!-- required property is klass, method of bean. -->
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.common.process.CommonBaseProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="noticeList"/>    <!-- attribute value is Map key -->
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="screenidModel" value="com.neo.pdm.common.model.TestModel" />
+                                            <entry key="actionidModel" value="com.neo.pdm.common.model.TestModel" />
+                                        </map>
+                                    </property>
+                                    <property name="transaction" value="true"/>
+                                </bean>
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.common.process.CommonBaseProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="screenid"/>    <!-- attribute value is Map key -->
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="actionidModel" value="com.neo.pdm.common.model.TestModel" />
+                                        </map>
+                                    </property>
+                                </bean>
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.common.process.CommonBaseProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="actionid"/>    <!-- attribute value is Map key -->
+                                </bean>
+                                <bean class="${bean.module}">
+                                    <property name="klass" value="com.neo.pdm.common.process.CommonBaseProcess" />
+                                    <property name="method" value="selectNoticeList" />
+                                    <property name="result" value="actionId" />
+                                    <property name="argument">
+                                        <map>
+                                            <entry key="testModel" value="com.neo.pdm.common.model.TestModel" />
+                                            <entry key="screenid" value="java.lang.String" />
+                                            <entry key="actionid" value="java.lang.String" />
+                                            <entry key="noticeList" value="java.util.List" />
+                                        </map>
+                                    </property>
+                                    <property name="transaction" value="true"/>
+                                </bean>
+                            </list>
+                        </entry>
+                        <entry key="RESULTPAGE">
+                            <map>
+                                <entry key="SUCC01" value="/index.do" />
+                                <entry key="FAIL01" value="/home.do" />
+                            </map>
+                        </entry>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

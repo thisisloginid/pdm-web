@@ -1,0 +1,13 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <context:property-placeholder location="classpath:/properties/core/constant.properties"/>
+
+    <import resource="/beans/CommonCodeBeans.xml"/>   <!-- common code module -->
+    <import resource="/beans/CommonLoginBeans.xml"/>   <!-- common login module -->
+    <import resource="/beans/CommonBaseBeans.xml"/>   <!-- common bbs module -->
+    
+</beans>
